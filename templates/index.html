@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% include "header.html" %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rodrick's Research</title>
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      }
+
+      .research-card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        background: white;
+        margin-bottom: 2rem;
+      }
+
+      .research-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .research-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        background-color: #f8fafc;
+      }
+
+      .research-title {
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .research-title:hover {
+        color: #3498db;
+        text-decoration: none;
+      }
+
+      .research-meta {
+        color: #6c757d;
+        font-size: 0.875rem;
+      }
+
+      .research-author {
+        color: #3498db;
+        font-weight: 500;
+      }
+
+      .research-body {
+        padding: 1.5rem;
+      }
+
+      .research-abstract {
+        color: #495057;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .research-footer {
+        padding: 1rem 1.5rem;
+        background-color: #f8fafc;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .btn-research {
+        background-color: #3498db;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1.25rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+
+      .btn-research:hover {
+        background-color: #2980b9;
+      }
+
+      .badge-tag {
+        background-color: #e9ecef;
+        color: #495057;
+        font-weight: 500;
+        padding: 0.35em 0.65em;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          {% for paper in all_posts %}
+          <div class="research-card">
+            <div class="research-header">
+              <h2>
+                <a
+                  href="{{url_for('paper',paper_id=paper.id)}}"
+                  class="research-title text-decoration-none"
+                >
+                  {{paper.title}}
+                </a>
+              </h2>
+              <div class="research-meta">
+                By
+                <a
+                  href="about.html"
+                  class="research-author text-decoration-none"
+                  >{{paper.author.name}}</a
+                >
+                | Published on
+                <span class="text-muted">{{paper.date_created}}</span>
+              </div>
+            </div>
+
+            <div class="research-body">
+              <p class="research-abstract">{{paper.body|safe}}</p>
+
+              <!-- FILEPATH: /d:/Shreyas/python tutorials/project_work/templates/index.html -->
+              <div class="mb-3">
+                {% for category in categories %}
+                <span class="badge-tag rounded-pill">{{ category }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div
+              class="research-footer d-flex justify-content-between align-items-center"
+            >
+              <div class="text-muted small">
+                <i class="bi bi-file-earmark-text me-1"></i> 12 pages
+                <i class="bi bi-journal-bookmark ms-3 me-1"></i> ACM
+              </div>
+              <a
+                href="{{url_for('paper',paper_id=paper.id)}}"
+                class="btn btn-research"
+              >
+                Read Paper <i class="bi bi-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

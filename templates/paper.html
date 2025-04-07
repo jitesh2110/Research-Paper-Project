@@ -1,0 +1,62 @@
+{% include "header.html" %}
+
+<div class="container mt-5">
+  <div class="card shadow-lg border-0 p-4 rounded-4">
+    <div class="row g-4 align-items-start">
+      <!-- Title & Author -->
+      <div class="col-12">
+        <h2 class="fw-bold text-black">{{ paper.title }}</h2>
+        <p class="fw-semibold text-secondary">By: {{ paper.author.name }}</p>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Abstract -->
+      <div class="col-12">
+        <h4 class="fw-bold text-dark">Abstract</h4>
+        <p class="text-muted">{{ paper.body | safe }}</p>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Additional Information -->
+      <div class="col-12">
+        <h4 class="fw-bold text-dark">Additional Information</h4>
+        <ul class="list-unstyled">
+          <li><strong>Collaborators:</strong> {{ paper.collaborators }}</li>
+          <li><strong>Department:</strong> {{ paper.department }}</li>
+          <li><strong>Categories:</strong> {{ paper.categories }}</li>
+          <li>
+            <strong>Date Created:</strong> {{ paper.date_created.strftime('%B
+            %d, %Y') }}
+          </li>
+        </ul>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Download Attachment Button -->
+      <div class="col-12">
+        <a
+          href="{{ url_for('download',filepath=paper.document) }}"
+          class="btn btn-primary"
+        >
+          <i class="fa fa-download me-2"></i> Download Attachment
+        </a>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Delete Button (Only Visible to Author) -->
+      {% if current_user.id == paper.author.id %}
+      <div class="col-12 text-end">
+        <form action="{{ url_for('delete', post_id=paper.id) }}" method="POST">
+          <button type="submit" class="btn btn-danger px-4 py-2">
+            <i class="fa fa-trash me-2"></i> Delete Paper
+          </button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
